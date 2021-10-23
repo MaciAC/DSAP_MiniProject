@@ -2,6 +2,7 @@
 Speech enhancement using logMMSE for amplitude estimation and speech presence uncertainty.
 
 References:
+
 <a id="1">[1]</a> 
 Ephraim, Y. and Malah, D (1985).
 Speech enhancement using a minimum mean-square error log-spectral amplitude estimator.
