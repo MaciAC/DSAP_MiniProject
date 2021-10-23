@@ -2,15 +2,15 @@ clear all;
 addpath(genpath("obj_evaluation_quality")); % We will use the Matlab code from Loizou
 
 % Use |audioDatastore| to create a datastore for the files in the "..." folder.
-experiment = "data/babble/0db";
-specific = 10;
+experiment = "data/babble/10db";
+specific = 0;
 plots = true;
 
 % Read and process the contents of each file from the datastore
 samplingFreq=8000;
 names = ["wiener" "soft" "." "cohen"];
 
-for option=[1, 2, 4]
+for option=[ 2, 4]
 noisy=audioDatastore(experiment); % Change it to the proper folder
 clean=audioDatastore("data/clean");
 
@@ -28,17 +28,23 @@ for n=1:30
 
     aux_output = output + names(option)+ "/" + C(end);
     if option ~=1
-        logmmse_SPU(filename, aux_output, option);
+        pSAP = logmmse_SPU(filename, aux_output, option);
     else
         wiener_as(filename, aux_output); % Wiener filter
     end
     if plots
     figure();
+    subplot(2,1,1);
     hold on
     plot(NoisySignal);
     [CleanedSignal, Srate]= audioread(aux_output);
     plot(CleanedSignal);
-    plot(CleanSignal);
+    xlim([0 size(CleanedSignal,1)]);
+
+    %plot(CleanSignal);
+
+    subplot(2,1,2);
+    imagesc(pSAP(1:70,:)*150);
     saveas(gcf,'results/plots/Signals_' + extractBefore(C(end), '.') + '_' + names(option) + "_" + experiment.replace('/', '_') +'.png');
     end
     % Process the file, put the cleaned signal in CleanedSignal
