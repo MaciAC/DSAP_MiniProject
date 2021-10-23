@@ -1,4 +1,4 @@
-function logmmse_SPU(filename,outfile,option)
+function [pSAP] = logmmse_SPU(filename,outfile,option)
 
 %
 %  Implements the logMMSE algorithm with signal-presence uncertainty (SPU) [1].
@@ -87,6 +87,7 @@ x_old=zeros(len1,1);
 Nframes=floor(length(x)/len2)-floor(len/len2);
 xfinal=zeros(Nframes*len2,1);
 
+pSAP = zeros(len, Nframes); % to store spectrum speech presence probabilities
 
 if option==4 % Cohen's method  
 global zetak zeta_fr_old z_peak
@@ -146,13 +147,13 @@ for n=1:Nframes
     % --- estimate conditional speech-presence probability ---------------
     %
     [qk]=est_sap(qk,ksi,ksi_old,gammak,option);   % estimate P(Ho)- a priori speech absence prob.  
-    pSAP = (1-qk)./(1-qk+qk.*(1+ksi).*exp(-vk)); % P(H1 | Yk)
+    pSAP(:,n) = (1-qk)./(1-qk+qk.*(1+ksi).*exp(-vk)); % P(H1 | Yk)
 
 
     % ---- Cohen's 2002 ------
     %
-    Gmin2=Gmin.^(1-pSAP); % Cohen's (2002) - Eq 8
-    Gcohen=(hw.^pSAP).*Gmin2;
+    Gmin2=Gmin.^(1-pSAP(:,n)); % Cohen's (2002) - Eq 8
+    Gcohen=(hw.^pSAP(:,n)).*Gmin2;
     sig = sig.*Gcohen;
     %----------------------------
  
