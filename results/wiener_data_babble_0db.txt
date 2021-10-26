@@ -1,2 +1,0 @@
-
- segsnr_m=-3.0 pesq_m=1.8 sig_m=2.2 bak_m=1.6 ovl_m=1.8
