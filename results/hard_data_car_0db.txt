@@ -1,2 +1,5 @@
 
  segsnr_m=-0.0 pesq_m=1.8 sig_m=2.3 bak_m=1.9 ovl_m=1.9
+ 
+ segsnr_v=0.5 pesq_v=0.0 sig_v=0.1 bak_v=0.0 ovl_v=0.0
+ 
