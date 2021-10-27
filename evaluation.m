@@ -2,7 +2,7 @@ clear all;
 addpath(genpath("obj_evaluation_quality")); % We will use the Matlab code from Loizou
 
 % Use |audioDatastore| to create a datastore for the files in the "..." folder.
-experiment = "data/car/10db";
+experiment = "data/babble/10db";
 specific = 0; % 0 to compute all examples 1 to 30 for an specific audio signal
 plots = true;
 
@@ -10,7 +10,7 @@ plots = true;
 samplingFreq=8000;
 names = ["wiener" "soft" "hard" "cohen"];
 
-for option=[4]
+for option=[2,3,4]
 noisy=audioDatastore(experiment); % Change it to the proper folder
 clean=audioDatastore("data/clean");
 
@@ -43,14 +43,14 @@ for n=1:30
     else
         subpl_n = 3;
     end
-
+    
     [CleanedSignal, Srate]= audioread(aux_output);
 
     subplot(subpl_n,1,1);
     plot(NoisySignal, 'b');
     title('Noisy Signal');
     xlim([0 size(CleanedSignal,1)]);
-
+    
     subplot(subpl_n,1,2);
     plot(CleanSignal, 'k');
     title('Clean Signal');
@@ -63,7 +63,8 @@ for n=1:30
 
     if option ~=1
     subplot(subpl_n,1,4);
-    imagesc(pSAP(1:size(pSAP,1)/2-10,:)*100);
+    imagesc(pSAP(size(pSAP,1)/2+10:end,:)*100);
+    yticks([0 4000 8000])
     title('Probability of speech presence per band');
 
     end
