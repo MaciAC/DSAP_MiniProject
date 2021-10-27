@@ -1,5 +1,5 @@
 # DSAP_MiniProject
-Speech enhancement using logMMSE for amplitude estimation and speech presence uncertainty.
+Speech enhancement using logMMSE for amplitude estimation and speech presence uncertainty. Presentation for Digital Speech and Audio Processing, MATT master's from UPC.
 
 References:
 
